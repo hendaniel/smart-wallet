@@ -11,9 +11,13 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        const user = { id: '1', name: 'Daniel', email: 'danielmartinezdm@hotmail.com' }
-        if (user) {
-          return user
+        const { username, password } = credentials as any
+        const users = {
+          daniel: 'pandahermosa',
+          sofia: 'cerdihermoso',
+        } as any
+        if (users[username] === password) {
+          return { id: '1', name: 'User', email: 'danielmartinezdm@hotmail.com' }
         } else {
           return null
         }

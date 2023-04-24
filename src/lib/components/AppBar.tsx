@@ -12,9 +12,11 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
+import { signOut } from 'next-auth/react'
+import TextField from '@mui/material/TextField'
 
 const pages = ['Estadisticas', 'Mis finanzas', 'Metas']
-const settings = ['Perfil', 'Cuenta']
+const settings = ['Logout']
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -33,6 +35,10 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleLogOut = () => {
+    signOut()
   }
 
   return (
@@ -154,7 +160,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleLogOut}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

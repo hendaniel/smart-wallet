@@ -4,12 +4,18 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../api/auth/[...nextauth]'
 import Button from '@mui/material/Button'
 import { TextField, useTheme } from '@mui/material'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const theme = useTheme()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-  const name = useRef('')
+  const handleUsername = (event: any) => {
+    setUsername(event.target.value)
+  }
+  const handlePassword = (event: any) => {
+    setPassword(event.target.value)
+  }
   return (
     <div
       style={{
@@ -21,10 +27,16 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
       <form method="post" action="/api/auth/callback/credentials">
         <div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <TextField id="outlined-required" label="Username" />
-            <TextField id="outlined-password-input" label="Password" type="password" autoComplete="current-password" />
+            <TextField id="outlined-required" label="Username" onChange={handleUsername} />
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              onChange={handlePassword}
+            />
           </div>
-          <Button variant="contained" onClick={() => signIn('credentials', { username: 'daniel', password: 'pass' })}>
+          <Button variant="contained" onClick={() => signIn('credentials', { username, password })}>
             Sign in with credentials
           </Button>
         </div>
